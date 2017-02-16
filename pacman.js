@@ -64,7 +64,7 @@ function displayMenu() {
     ghosts.forEach(function(ghost) {
       console.log('(' + ghost.menu_option + ') ' + 'Eat ' + ghost.name)
     });
-  console.log(' ')
+  console.log('(p) Eat PowerPellet')
   console.log('(q) Quit');
 }
 
@@ -103,8 +103,24 @@ function processInput(key) {
     case '4':
       eatGhost(Clyde);
       break;
+    case 'p':
+      eatPowerPellet();
+      break;
     default:
       console.log('\nInvalid Command!');
+  }
+}
+
+function eatPowerPellet() {
+  if (powerPellets === 0) {
+    console.log('\nNo Power-Pellets Left!');
+  }
+  else {
+    score += 50;
+    powerPellets -= 1;
+    ghosts.forEach(function(ghost) {
+      ghost.edible = true
+    });
   }
 }
 
@@ -115,7 +131,9 @@ function eatGhost(ghost) {
     checkLives();
   }
   else {
-    console.log('\nPac-Man ate ' + ghost.name + " ...NOM!")
+    console.log('\nPac-Man ate ' + ghost.name + " ...NOM!");
+    score += 200;
+    ghost.edible = false;
   }
 }
 
