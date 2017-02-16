@@ -61,13 +61,22 @@ function displayStats() {
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
-    ghosts.forEach(function(ghost) {
-      console.log('(' + ghost.menu_option + ') ' + 'Eat ' + ghost.name)
+  ghosts.forEach(function(ghost) {
+    console.log('(' + ghost.menu_option + ') ' + 'Eat ' + ghost.name + ' ' + edibleDisplay(ghost) )
     });
-  console.log('(p) Eat PowerPellet')
+  if (powerPellets != 0) {console.log('(p) Eat PowerPellet')}
   console.log('(q) Quit');
 }
 
+function edibleDisplay(ghost) {
+  if (ghost.edible === true) {
+    return "(edible)"
+  }
+  else {
+    return "(inedible)"
+  }
+
+}
 function displayPrompt() {
   // process.stdout.write is similar to console.log except it doesn't add a new line after the text
   process.stdout.write('\nWaka Waka :v '); // :v is the Pac-Man emoji.
