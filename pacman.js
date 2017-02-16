@@ -1,13 +1,13 @@
 // Setup initial game stats
 var score = 0;
 var lives = 2;
-
+var powerPellets = 4;
 
 // Define your ghosts here
 var Inky = {
   menu_option: '1',
   name: 'Inky',
-  colour: 'Red',
+  colour: 'red',
   character: 'Shadow',
   edible: false
 };
@@ -15,7 +15,7 @@ var Inky = {
 var Blinky = {
   menu_option: '2',
   name: 'Blinky',
-  colour: 'Cyan',
+  colour: 'cyan',
   character: 'Speedy',
   edible: false
 };
@@ -23,7 +23,7 @@ var Blinky = {
 var Pinky = {
   menu_option: '3',
   name: 'Pinky',
-  colour: 'Pink',
+  colour: 'pink',
   character: 'Bashful',
   edible: false
 };
@@ -31,7 +31,7 @@ var Pinky = {
 var Clyde = {
   menu_option: '4',
   name: 'Clyde',
-  colour: 'Orange',
+  colour: 'orange',
   character: 'Bashful',
   edible: false
 };
@@ -55,12 +55,16 @@ function clearScreen() {
 }
 
 function displayStats() {
-  console.log('Score: ' + score + '     Lives: ' + lives);
+  console.log('Score: ' + score + '     Lives: ' + lives + '     Power-Pellets: ' + powerPellets);
 }
 
 function displayMenu() {
   console.log('\n\nSelect Option:\n');  // each \n creates a new line
   console.log('(d) Eat Dot');
+    ghosts.forEach(function(ghost) {
+      console.log('(' + ghost.menu_option + ') ' + 'Eat ' + ghost.name)
+    });
+  console.log(' ')
   console.log('(q) Quit');
 }
 
@@ -87,12 +91,39 @@ function processInput(key) {
     case 'd':
       eatDot();
       break;
+    case '1':
+      eatGhost(Inky);
+      break;
+    case '2':
+      eatGhost(Blinky);
+      break;
+    case '3':
+      eatGhost(Pinky);
+      break;
+    case '4':
+      eatGhost(Clyde);
+      break;
     default:
       console.log('\nInvalid Command!');
   }
 }
 
+function eatGhost(ghost) {
+  if (ghost.edible === false) {
+    lives -= 1
+    console.log('\nYou were killed by the '+ ghost.colour + ' ghost, ' + ghost.name)
+    checkLives();
+  }
+  else {
+    console.log('\nPac-Man ate ' + ghost.name + " ...NOM!")
+  }
+}
 
+function checkLives() {
+  if (lives === 0) {
+    process.exit();
+  }
+}
 //
 // YOU PROBABLY DON'T WANT TO CHANGE CODE BELOW THIS LINE
 //
